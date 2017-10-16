@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name Energy_Mon)(type KiCad)(uri ${KIPRJMOD}/em.pretty)(options "")(descr ""))
+  (lib (name EnergyMon)(type KiCad)(uri ${KIPRJMOD}/em.pretty)(options "")(descr ""))
+)
