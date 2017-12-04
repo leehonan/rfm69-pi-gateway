@@ -1,0 +1,11 @@
+[Unit]
+Description=Pi Shutdown via GPIO Buttons
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/python3.6 /home/pi/pishutdown.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
