@@ -188,7 +188,7 @@ Messages are distinguished from user commands and user feedback/logging by a pre
 
 
 ### Radio Protocol
-See the <a href="https://github.com/leehonan/meterman-node/blob/master/readme.md#radproto">MeterNode Radio Protocol documentation</a>.
+See the <a href="https://github.com/leehonan/meterman-node/blob/master/readme.md#radio-protocol">MeterNode Radio Protocol documentation</a>.
 
 ## Implementation - Gateway Firmware
 For simplicity, the firmware is implemented as a single C++ program (no header file), although it will need supporting libraries to compile.  There is some redundancy versus the companion meternode firmware - the common components may be moved to a library.  Some Arduino library features are used.
