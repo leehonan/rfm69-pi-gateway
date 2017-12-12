@@ -111,6 +111,7 @@ scp /Users/lee/meter_gateway/firmware.hex meterman@meterbox:
 
 sudo avrdude -c arduino -p atmega328p -P /dev/ttyAMA0 -b 115200 -U flash:w:/home/meterman/firmware.hex
 ```
+(for RPi2, RPi3 has serial at /dev/serial0)
 
 For this to work, avrdude needs to be patched to work around the absence of a DTR pin on the RPi.  The files are enclosed in this repo's `/src` directory, and can be installed using the following commands (as sudo), or by executing the meterman setup script (from the meterman repo) on the pi.
 ```
@@ -131,6 +132,7 @@ On the RPi minicom can be used (as can screen etc) to open a terminal:
 ```
 sudo minicom -b 115200 -o -D /dev/ttyAMA0
 ```
+(for RPi2, RPi3 has serial at /dev/serial0)
 
 The following commands are available through the serial console (case-insensitive):
 
