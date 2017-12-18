@@ -1390,7 +1390,7 @@ void processSerialCommand(){
         uint8_t addr2 = 0;
         uint8_t addr3 = 0;
         uint8_t addr4 = 0;
-        if(sscanf(tmpStr, "%hhu.%hhu.%hhu.%hhu",
+        if(sscanf(tmpStr, "%" SCNd8 ".%" SCNd8 ".%" SCNd8 ".%" SCNd8,
                 &addr1, &addr2, &addr3, &addr4) != 4){
             printPrompt();
             writeLogLnF(F("Bad Addr"), logNull);
