@@ -42,7 +42,6 @@
     IN THE SOFTWARE.
  */
 
-
 // *****************************************************************************
 //    Main Config Parameters
 //    'DEF_*' constants are defaults for configuration variables of the same
@@ -64,7 +63,7 @@
 #include <TimeLib.h>
 
 
-static const int8_t FW_VERSION = 6;
+static const int8_t FW_VERSION = 8;
 
 // Log Levels
 typedef enum {
@@ -317,7 +316,7 @@ static const float RADIO_FREQ = 915.0f;
 // (unless running on DC adapter and not concerned with RF 'noise').
 
 // Using FSK, Whitening, bit rate = 125kbps, modulation frequency = 125kHz.
-static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb125Fd125;
+static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
 
 // Transmit and Receive timeouts (millis).  Long timeouts can make serial
 // communication etc laggy if gateway not up.
@@ -1390,7 +1389,7 @@ void processSerialCommand(){
         uint8_t addr2 = 0;
         uint8_t addr3 = 0;
         uint8_t addr4 = 0;
-        if(sscanf(tmpStr, "%hhu.%hhu.%hhu.%hhu",
+        if(sscanf(tmpStr, "%" SCNu8 ".%" SCNu8 ".%" SCNu8 ".%" SCNu8,
                 &addr1, &addr2, &addr3, &addr4) != 4){
             printPrompt();
             writeLogLnF(F("Bad Addr"), logNull);
@@ -1632,7 +1631,7 @@ void processSerialMessage(){
                 strlen_P(SMSG_SMVAL) + 1,
                 (strlen(serInBuff) - strlen_P(SMSG_SMVAL)));
         static uint32_t newMeterValue = 0ul;
-        sscanf(tmpStr, "%hhu,%lu", &nodeId, &newMeterValue);
+        sscanf(tmpStr, "%" SCNu8 ",%lu", &nodeId, &newMeterValue);
         nodeIx = getNodeIxById(nodeId);
         print_P(SMSG_TX_PREFIX);
         if (nodeIx < UINT8_MAX &&
@@ -1664,7 +1663,7 @@ void processSerialMessage(){
                 (strlen(serInBuff) - strlen_P(SMSG_SPLED)));
         static uint32_t newPuckLEDRate = 0ul;
         static uint32_t newPuckLEDTime = 0ul;
-        sscanf(tmpStr, "%hhu,%lu,%lu",
+        sscanf(tmpStr, "%" SCNu8 ",%lu,%lu",
                     &nodeId, &newPuckLEDRate, &newPuckLEDTime);
         nodeIx = getNodeIxById(nodeId);
         print_P(SMSG_TX_PREFIX);
@@ -1699,7 +1698,7 @@ void processSerialMessage(){
                 serInBuff + strlen_P(SMSG_RX_PREFIX) + strlen_P(SMSG_SMINT) + 1,
                 (strlen(serInBuff) - strlen_P(SMSG_SMINT)));
         static uint32_t newMeterInterval = 0ul;
-        sscanf(tmpStr, "%hhu,%lu", &nodeId, &newMeterInterval);
+        sscanf(tmpStr, "%" SCNu8 "%lu", &nodeId, &newMeterInterval);
         nodeIx = getNodeIxById(nodeId);
         print_P(SMSG_TX_PREFIX);
         if (nodeIx < UINT8_MAX && newMeterInterval < UINT8_MAX){
@@ -1729,7 +1728,7 @@ void processSerialMessage(){
                 (strlen(serInBuff) - strlen_P(SMSG_SGITR)));
         static uint32_t tmpPollRate = 0ul;
         static uint32_t tmpPollPeriod = 0ul;
-        sscanf(tmpStr, "%hhu,%lu,%lu", &nodeId, &tmpPollRate, &tmpPollPeriod);
+        sscanf(tmpStr, "%" SCNu8 ",%lu,%lu", &nodeId, &tmpPollRate, &tmpPollPeriod);
         nodeIx = getNodeIxById(nodeId);
         print_P(SMSG_TX_PREFIX);
         if (nodeIx < UINT8_MAX && tmpPollRate >= 10 && tmpPollRate <= 600
@@ -1902,7 +1901,7 @@ void processMsgRecv(){
     // e.g.:   GINR;4300,890000,555000,880,-80,10,100,5
     else if (strStartsWithP(msgBuffStr, RMSG_GINR) == 1){
         // get message value fields
-        sscanf(msgBuffStr, "GINR,%d,%lu,%lu,%d,%hhd,%hhu,%d,%hhu,%d",
+        sscanf(msgBuffStr, "GINR,%d,%lu,%lu,%d,%" SCNd8 ",%" SCNu8 ",%d,%" SCNu8 ",%d",
                 &meterNodes[nodeIx].battVoltageMV,
                 &meterNodes[nodeIx].secondsUptime,
                 &meterNodes[nodeIx].secondsSlept,

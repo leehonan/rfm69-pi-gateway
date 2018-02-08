@@ -109,7 +109,7 @@ In practice for the gateway, it is easiest to upload firmware using scp and then
 ```
 scp /Users/lee/meter_gateway/firmware.hex meterman@meterbox:
 
-sudo avrdude -c arduino -p atmega328p -P /dev/ttyAMA0 -b 115200 -U flash:w:/home/meterman/firmware.hex
+sudo avrdude -c arduino -p atmega328p -P /dev/serial0 -b 115200 -U flash:w:/home/meterman/firmware.hex
 ```
 
 For this to work, avrdude needs to be patched to work around the absence of a DTR pin on the RPi.  The files are enclosed in this repo's `/src` directory, and can be installed using the following commands (as sudo), or by executing the meterman setup script (from the meterman repo) on the pi.
@@ -129,8 +129,9 @@ A serial connection can be made using a baud of 115200bps, 8N1 (8 data bits, no 
 
 On the RPi minicom can be used (as can screen etc) to open a terminal:
 ```
-sudo minicom -b 115200 -o -D /dev/ttyAMA0
+sudo minicom -b 115200 -o -D /dev/serial0
 ```
+Ensure that hardware flow control is off.
 
 The following commands are available through the serial console (case-insensitive):
 
