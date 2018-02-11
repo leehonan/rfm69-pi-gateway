@@ -320,8 +320,8 @@ static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
 
 // Transmit and Receive timeouts (millis).  Long timeouts can make serial
 // communication etc laggy if gateway not up.
-static const uint16_t TX_TIMEOUT = 1200;
-static const uint16_t RX_TIMEOUT = 1200;
+static const uint16_t TX_TIMEOUT = 2000;
+static const uint16_t RX_TIMEOUT = 2000;
 
 // Radio Driver and Message Manager
 RH_RF69 radio(RADIO_SS_PIN, RADIO_INTERRUPT_PIN);
