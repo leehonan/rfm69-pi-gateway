@@ -63,7 +63,7 @@
 #include <TimeLib.h>
 
 
-static const int8_t FW_VERSION = 8;
+static const int8_t FW_VERSION = 9;
 
 // Log Levels
 typedef enum {
@@ -81,7 +81,7 @@ static const LogLev DEF_LOG_LEVEL = logDebug;
 // if using HW/HCW module must set to true:
 static const bool RADIO_HIGH_POWER = true;
 
-// Initial power level in dBm.  Use -18 to +13 for W/CW, -14 to +20 for HW/HCW:
+// Initial power level in dBm.  Use -18 to +13 for W/CW, -2 to +20 for HW/HCW:
 static const int8_t DEF_TX_POWER = 20;
 
 // Gateway ID.  Gateway is usually 1.  Nodes between 2 and 254.
@@ -311,11 +311,11 @@ static const float RADIO_FREQ = 915.0f;
 
 // Modem config per RadioHead docs.  FSK seems most reliable.
 //
-// From FSK_Rb4_8Fd9_6 through to FSK_Rb125Fd125 work well (could go higher).
+// From FSK_Rb9_6Fd19_2 through to FSK_Rb125Fd125 work well (could go higher).
 // Use fastest rate that yields acceptable range and reasonably low TX power
 // (unless running on DC adapter and not concerned with RF 'noise').
 
-// Using FSK, Whitening, bit rate = 125kbps, modulation frequency = 125kHz.
+//Using FSK, Whitening, bit rate = 9.6kbps, modulation frequency = 19.2kHz.
 static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;
 
 // Transmit and Receive timeouts (millis).  Long timeouts can make serial
