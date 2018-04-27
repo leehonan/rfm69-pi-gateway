@@ -63,7 +63,7 @@
 #include <TimeLib.h>
 
 
-static const int8_t FW_VERSION = 9;
+static const int8_t FW_VERSION = 10;
 
 // Log Levels
 typedef enum {
@@ -316,12 +316,14 @@ static const float RADIO_FREQ = 915.0f;
 // (unless running on DC adapter and not concerned with RF 'noise').
 
 //Using FSK, Whitening, bit rate = 9.6kbps, modulation frequency = 19.2kHz.
-static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
+static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb2_4Fd4_8;
 
 // Transmit and Receive timeouts (millis).  Long timeouts can make serial
 // communication etc laggy if gateway not up.
-static const uint16_t TX_TIMEOUT = 800;
-static const uint16_t RX_TIMEOUT = 800;
+static const uint16_t TX_TIMEOUT = 1000;
+static const uint16_t RX_TIMEOUT = 1000;
 
 // Radio Driver and Message Manager
 RH_RF69 radio(RADIO_SS_PIN, RADIO_INTERRUPT_PIN);
@@ -2086,6 +2088,7 @@ void sendRadioMsg(uint8_t recipient, bool checkReply){
     // Send message with an ack timeout as specified by TX_TIMEOUT
     if (msgManager.sendtoWait(radioMsgBuff, lenBuff, recipient)){
         // Wait for a reply from the Gateway if instructed to
+        wdt_reset();
         if (checkReply && msgManager.recvfromAckTimeout(radioMsgBuff, &lenBuff,
                     RX_TIMEOUT, &lastMsgFrom))
             processMsgRecv();
