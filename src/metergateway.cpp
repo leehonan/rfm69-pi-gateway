@@ -82,7 +82,7 @@ static const LogLev DEF_LOG_LEVEL = logDebug;
 static const bool RADIO_HIGH_POWER = true;
 
 // Initial power level in dBm.  Use -18 to +13 for W/CW, -2 to +20 for HW/HCW:
-static const int8_t DEF_TX_POWER = 20;
+static const int8_t DEF_TX_POWER = 19;
 
 // Gateway ID.  Gateway is usually 1.  Nodes between 2 and 254.
 // 255 is broadcast (RH_GMSG_ADDRESS).
@@ -317,13 +317,13 @@ static const float RADIO_FREQ = 915.0f;
 
 //Using FSK, Whitening, bit rate = 9.6kbps, modulation frequency = 19.2kHz.
 // static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;
-// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
-static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb2_4Fd4_8;
+static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb2_4Fd4_8;
 
 // Transmit and Receive timeouts (millis).  Long timeouts can make serial
 // communication etc laggy if gateway not up.
-static const uint16_t TX_TIMEOUT = 1000;
-static const uint16_t RX_TIMEOUT = 1000;
+static const uint16_t TX_TIMEOUT = 1200;
+static const uint16_t RX_TIMEOUT = 1200;
 
 // Radio Driver and Message Manager
 RH_RF69 radio(RADIO_SS_PIN, RADIO_INTERRUPT_PIN);
