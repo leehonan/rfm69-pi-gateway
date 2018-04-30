@@ -316,14 +316,17 @@ static const float RADIO_FREQ = 915.0f;
 // (unless running on DC adapter and not concerned with RF 'noise').
 
 //Using FSK, Whitening, bit rate = 9.6kbps, modulation frequency = 19.2kHz.
-// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb9_6Fd19_2;z
 static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb4_8Fd9_6;
 // static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb2_4Fd4_8;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::FSK_Rb2Fd5;
+// static const RH_RF69::ModemConfigChoice MODEM_CONFIG = RH_RF69::GFSK_Rb4_8Fd9_6;
 
-// Transmit and Receive timeouts (millis).  Long timeouts can make serial
-// communication etc laggy if gateway not up.
-static const uint16_t TX_TIMEOUT = 1200;
-static const uint16_t RX_TIMEOUT = 1200;
+// Transmit and Receive timeouts (millis), retry count for TX.
+static const uint16_t TX_TIMEOUT = 500;
+static const uint8_t TX_RETRIES = 3;
+// RX timeout is without retries, essentially polls continuously over period specified
+static const uint16_t RX_TIMEOUT = 1000;
 
 // Radio Driver and Message Manager
 RH_RF69 radio(RADIO_SS_PIN, RADIO_INTERRUPT_PIN);
@@ -941,6 +944,7 @@ void applyRadioConfig(){
 
     msgManager.setThisAddress(cfgGatewayId);
     msgManager.setTimeout(TX_TIMEOUT);
+    msgManager.setRetries(TX_RETRIES);
 
     if (!radio.setModemConfig(MODEM_CONFIG)) {
         writeLogLnF(F("ModemCfg fail"), logError);
